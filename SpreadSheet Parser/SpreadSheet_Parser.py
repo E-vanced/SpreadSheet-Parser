@@ -7,39 +7,33 @@ import sys
 
 from datetime import date
 
-def main():
-    getDate()
-    getSN()
+# today.day, today.month, today.year
+today = date.today()
+print("Today's date is", today.strftime("%m/%d/%Y"))
 
 
-def getDate():
-    # today.day, today.month, today.year
-    today = date.today()
-    print("Today's date is", today.strftime("%m/%d/%Y"))
-
-def getSN():
 # AT A LATER TIME I WOULD LIKE TO IMPLEMENT THE GOOGLE SHEETS API
 # FOR NOW< I AM JUST WORKING OUT THE MATH OF GETTING TH ECORRECT SERIAL NUMBERS
 
-    maxInt = sys.maxsize
-    decrement = True
+maxInt = sys.maxsize
+decrement = True
 
-    while decrement:
-    # decrease the maxInt value by factor 10
-    # as long as the OverflowError occurs.
-        decrement = False
-        try:
-           csv.field_size_limit(maxInt)
-        except OverflowError:
-           maxInt = int(maxInt / 2)
-           decrement = True
-    # Read the file
-    # r"C:\Users\ELATIOLAIS\Downloads\cameras-report.csv"
-    # r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv"
-    with open(r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv" , newline='') as csvfile:
-        reportReader = csv.DictReader(csvfile,)
-        for row in reportReader:
-            print(row)
+while decrement:
+# decrease the maxInt value by factor 10
+# as long as the OverflowError occurs.
+    decrement = False
+    try:
+        csv.field_size_limit(maxInt)
+    except OverflowError:
+        maxInt = int(maxInt / 2)
+        decrement = True
+# Read the file
+# r"C:\Users\ELATIOLAIS\Downloads\cameras-report.csv"
+# r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv"
+with open(r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv" , newline='') as csvfile:
+    reportReader = csv.DictReader(csvfile,)
+    for row in reportReader:
+        print(row)
 
 
 # need to have script grab the corresponding serial number with the date
