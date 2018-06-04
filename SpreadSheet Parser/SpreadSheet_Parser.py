@@ -9,7 +9,7 @@ from datetime import date
 
 # today.day, today.month, today.year
 today = date.today()
-print("Today's date is", today.strftime("%m/%d/%Y"))
+print("Today's date is", today.strftime("%#m/%#d/%Y"))
 
 
 # AT A LATER TIME I WOULD LIKE TO IMPLEMENT THE GOOGLE SHEETS API
@@ -20,7 +20,8 @@ print("Today's date is", today.strftime("%m/%d/%Y"))
 with open(r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv" , newline='') as csvfile:
     reportReader = csv.DictReader(csvfile,)
     for row in reportReader:
-        print(row['DATE'], row['SERIAL NUMBER'])
+        if(row['DATE'] == today.strftime("%#m/%#d/%Y")):
+            print(row['DATE'], row['SERIAL NUMBER'])
 
 
 # need to have script grab the corresponding serial number with the date
