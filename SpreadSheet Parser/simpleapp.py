@@ -12,7 +12,7 @@ class simpleapp_wx(wx.Frame):
         self.initialize()
 
     def initialize(self):
-        sizer = wx.GridBagSizer(vgap = 1, hgap = 0)
+        sizer = wx.GridBagSizer(vgap = 1, hgap = 1)
 
         self.entry = wx.TextCtrl(self,-1,value=u"Enter text here.")
         sizer.Add(self.entry,(0,0),(1,1),wx.EXPAND)
@@ -30,3 +30,6 @@ if __name__ == "__main__":
  # wx.adv.DatePickerCtrl
  # wx.Gauge
  # wx.ListCtrl   
+
+ # Event handlers are methods which will be called when something happens in the GUI.
+ # We bind the event handlers to specific widgets on specific events only.
