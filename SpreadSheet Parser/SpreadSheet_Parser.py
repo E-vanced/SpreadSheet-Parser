@@ -9,8 +9,8 @@ from datetime import date
 
 today = date.today()
 print("Today's date is", today.strftime("%#m/%#d/%Y"))
-
-
+totalrows = 0
+amcRows = 0
 # AT A LATER TIME I WOULD LIKE TO IMPLEMENT THE GOOGLE SHEETS API
 # FOR NOW I AM JUST WORKING OUT THE MATH OF GETTING THE CORRECT SERIAL NUMBERS
 
@@ -18,9 +18,16 @@ print("Today's date is", today.strftime("%#m/%#d/%Y"))
 # r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv"
 with open(r"C:\Users\ELATIOLAIS\Downloads\Testing reports.csv" , newline='') as csvfile:
     reportReader = csv.DictReader(csvfile,)
+    
     for row in reportReader:
+        
         if(row['DATE'] == today.strftime("%#m/%#d/%Y")):
+            s = str(row['SERIAL NUMBER'])
+            if 'AMC' in s:
+                amcRows += 1
             print(row['DATE'], row['SERIAL NUMBER'])
+           
+    print(amcRows)
 
 
 # DONE ------ need to have script grab the corresponding serial number with the date
