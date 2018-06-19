@@ -6,26 +6,34 @@ today = date.today()
 
 class simpleapp_wx(wx.Frame):
       
-    def __init__(self,parent,id,title):
-        wx.Frame.__init__(self,parent,id,title)
-        self.parent = parent
-        self.initialize()
+    def __init__(self):
+        wx.Frame.__init__(self, None, wx.ID_ANY, "Simple App")
+        panel = MainPanel(self)
 
-    def initialize(self):
-        sizer = wx.GridBagSizer(vgap = 1, hgap = 1)
 
-        self.entry = wx.TextCtrl(self,-1,value=u"Enter text here.")
-        sizer.Add(self.entry,(0,0),(1,1),wx.EXPAND)
+class MainPanel(wx.Panel):
+	def __init__(self, parent):
+		wx.Panel.__init__(self, parent=parent)
+		self.frame = parent
+		self.initialize()
 
-        self.date = wx.adv.DatePickerCtrl(self, -1, dt=today)
-        sizer.Add(self.date, (1,0), (2, 1), wx.EXPAND)
-        self.SetSizerAndFit(sizer)
-        self.Show(True)
+	def initialize(self):
+		sizer = wx.GridBagSizer(vgap = 10, hgap = 10)
+
+		self.entry = wx.TextCtrl(self,-1,value=u"Enter text here.")
+		sizer.Add(self.entry,(0,0),(1,1),wx.EXPAND)
+
+		self.date = wx.adv.DatePickerCtrl(self, -1, dt=today)
+		sizer.Add(self.date, (1,0), (2, 1), wx.EXPAND)
+		self.SetSizerAndFit(sizer)
+		
+
 
 if __name__ == "__main__":
-    app = wx.App()
-    frame = simpleapp_wx(None, -1, "Simple Application")
-    app.MainLoop()
+	app = wx.App(False)
+	frame = simpleapp_wx()
+	frame.Show(True)
+	app.MainLoop()
 
  # wx.adv.DatePickerCtrl
  # wx.Gauge
