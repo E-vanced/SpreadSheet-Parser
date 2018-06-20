@@ -68,6 +68,7 @@ class firstFrame(wx.Frame):
 		self.m_datePicker3 = wx.adv.DatePickerCtrl(self.m_panel7, wx.ID_ANY, wx.DefaultDateTime, wx.Point(-1,-1), wx.Size(-1,-1), wx.adv.DP_DEFAULT | wx.adv.DP_DROPDOWN)
 		self.m_datePicker3.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
 		
+		
 		fgSizer4.Add(self.m_datePicker3, 0, wx.ALL, 5)
 		
 		
@@ -122,7 +123,7 @@ class firstFrame(wx.Frame):
 		
 		##### THIS BUTTON HIDES THE FIRST FRAME AND DISPLAYS THE DIALOG BOX #####
 		self.m_button7 = wx.Button(self.m_panel7, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0)
-		self.m_button7.Bind(wx.EVT_BUTTON, self.hideFrame)
+		self.m_button7.Bind(wx.EVT_BUTTON, self.sendAndHide)
 		fgSizer4.Add(self.m_button7, 0, wx.ALIGN_RIGHT | wx.ALL, 5)
 		
 		
@@ -149,8 +150,9 @@ class firstFrame(wx.Frame):
 	
 	
 	
-	def hideFrame(self, event):
-
+	def sendAndHide(self, event):
+		print(self.m_datePicker3.GetValue())
+		print(self.m_filePicker1.GetPath())
 		self.Hide()
 		new_frame = serialCheck(None)
 		new_frame.Show()
