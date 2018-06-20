@@ -106,6 +106,10 @@ class firstFrame(wx.Frame):
 		self.m_textCtrl1.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
 		self.m_textCtrl1.SetMinSize(wx.Size(300,100))
 		self.m_textCtrl1.SetMaxSize(wx.Size(300,100))
+
+		dt3 = FileDropTarget(self.m_textCtrl1)
+
+		self.SetDropTarget(dt3)
 		
 		fgSizer4.Add(self.m_textCtrl1, 0, wx.ALL | wx.EXPAND | wx.FIXED_MINSIZE, 5)
 		
@@ -220,11 +224,32 @@ class serialCheck(wx.Dialog):
 		frame = firstFrame(None)
 		frame.Show()
 
+class FileDropTarget(wx.FileDropTarget):
+   """ This object implements Drop Target functionality for Files """
+   def __init__(self, obj):
+      """ Initialize the Drop Target, passing in the Object Reference to
+          indicate what should receive the dropped files """
+      # Initialize the wxFileDropTarget Object
+      wx.FileDropTarget.__init__(self)
+      # Store the Object Reference for dropped files
+      self.obj = obj
+
+   def OnDropFiles(self, x, y, filenames):
+	   
+      """ Implement File Drop """
+      # For Demo purposes, this function appends a list of the files dropped at
+      # the end of the widget's text
+      # Move Insertion Point to the end of the widget's text
+      self.obj.SetInsertionPointEnd()
+      # append a list of the file names dropped
+      #self.obj.WriteText("%d file(s) dropped:\n" % (len(filenames)))
+      for file in filenames:
+         self.obj.WriteText(file + '\n')
+      self.obj.WriteText('\n')
+	  print('x')
 
 
 
-
-	
 if __name__ == "__main__":
 	app = wx.App(False)
 	frame = firstFrame(None)
