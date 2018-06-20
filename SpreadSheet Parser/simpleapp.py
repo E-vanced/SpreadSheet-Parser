@@ -15,9 +15,7 @@ class MainPanel(wx.Panel):
 	def __init__(self, parent):
 		wx.Panel.__init__(self, parent=parent)
 		self.frame = parent
-		self.initialize()
-
-	def initialize(self):
+	
 		sizer = wx.GridBagSizer(vgap = 10, hgap = 10)
 
 		self.entry = wx.TextCtrl(self,-1,value=u"Enter text here.")
