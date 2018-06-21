@@ -10,11 +10,30 @@ import wx
 import wx.xrc
 import wx.adv
 import sys
+import pip
+import setuptools
+import os
+import os.path 
+import csv
+
+from datetime import date
 
                 
+pathOfFile = str
+
+amcRows = 0
 
 
-
+def readReport(date, filepath):
+                with open(filepath , newline='') as csvfile:
+                    reportReader = csv.DictReader(csvfile,)
+                    for row in reportReader:
+                        if(row['DATE'] == date.strftime("%#m/%#d/%Y")):
+                            s = str(row['SERIAL NUMBER'])
+                            if 'AMC' in s:
+                                amcRows += 1
+                                print(row['DATE'], row['SERIAL NUMBER'])
+                print(amcRows)
 
 ###########################################################################
 ## Class firstFrame
@@ -39,22 +58,14 @@ class firstFrame(wx.Frame):
                 fgSizer4.SetFlexibleDirection(wx.BOTH)
                 fgSizer4.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_NONE)
                 
-                
+                #------ROW 0------#
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)                
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)          
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)              
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)                
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
+                #------ROW 1------#
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
                 self.m_staticText1 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Select Date:", wx.Point(-1,-1), wx.Size(-1,-1), 0)
@@ -69,15 +80,11 @@ class firstFrame(wx.Frame):
                 self.m_datePicker3.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
                 
                 
-                fgSizer4.Add(self.m_datePicker3, 0, wx.ALL, 5)
-                
-                
+                fgSizer4.Add(self.m_datePicker3, 0, wx.ALL, 5)               
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
+                #------ROW 2------#
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
                 self.m_staticText3 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Select .CSV file:", wx.DefaultPosition, wx.DefaultSize, 0 | wx.TAB_TRAVERSAL)
@@ -87,14 +94,11 @@ class firstFrame(wx.Frame):
                 
                 self.m_filePicker1 = wx.FilePickerCtrl(self.m_panel7, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.Size(300,-1), wx.FLP_DEFAULT_STYLE)
                 fgSizer4.Add(self.m_filePicker1, 0, wx.ALL | wx.EXPAND, 5)
-                
-                
+ 
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
+                #------ROW 3------#
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
                 self.m_staticText31 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Or Drag and Drop the file:", wx.DefaultPosition, wx.DefaultSize, 0)
@@ -111,18 +115,12 @@ class firstFrame(wx.Frame):
 
                 self.SetDropTarget(dt3)
                 
-                fgSizer4.Add(self.m_textCtrl1, 0, wx.ALL | wx.EXPAND | wx.FIXED_MINSIZE, 5)
-                
-                
+                fgSizer4.Add(self.m_textCtrl1, 0, wx.ALL | wx.EXPAND | wx.FIXED_MINSIZE, 5)               
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                
+                #------ROW 4------#
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
                 ##### THIS BUTTON HIDES THE FIRST FRAME AND DISPLAYS THE DIALOG
@@ -130,17 +128,13 @@ class firstFrame(wx.Frame):
                 self.m_button7 = wx.Button(self.m_panel7, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0)
                 self.m_button7.Bind(wx.EVT_BUTTON, self.sendAndHide)
                 fgSizer4.Add(self.m_button7, 0, wx.ALIGN_RIGHT | wx.ALL, 5)
-                
-                
+
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+
                 fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                
+                #------ROW 5------#
+                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5) 
                 self.m_panel7.SetSizer(fgSizer4)
                 self.m_panel7.Layout()
                 fgSizer4.Fit(self.m_panel7)
@@ -151,26 +145,27 @@ class firstFrame(wx.Frame):
                 self.Layout()
                 
                 self.Centre(wx.BOTH)
-                
+                # dndPath = self.m_textCtrl1.GetLineText(0)
+               
         
-        
-        def sendAndHide(self, event):
-              # dndPath = self.m_textCtrl1.GetLineText(0)
+
+
+        def sendAndHide(self, event):   
+                pickPath = self.m_filePicker1.GetPath()
+                datePicked = self.m_datePicker3.GetValue()
                 print(self.m_textCtrl1.GetLineText(0))
-              # datePicked = self.m_datePicker3.GetValue()
-                print(self.m_datePicker3.GetValue())
-              # pickPath = self.m_filePicker1.GetPath()
+                print(self.m_datePicker3.GetValue()) 
                 print(self.m_filePicker1.GetPath())
+                readReport(datePicked, pickPath)
                 self.Hide()
                 new_frame = serialCheck(None)
                 new_frame.Show()
-
-
         
 
 ###########################################################################
 ## Class serialCheck
 ###########################################################################
+
 class serialCheck(wx.Dialog):
         
         def __init__(self, parent):
