@@ -235,7 +235,7 @@ class FileDropTarget(wx.FileDropTarget):
       self.obj = obj
 
    def OnDropFiles(self, x, y, filenames):
-	   
+
       """ Implement File Drop """
       # For Demo purposes, this function appends a list of the files dropped at
       # the end of the widget's text
@@ -246,8 +246,8 @@ class FileDropTarget(wx.FileDropTarget):
       for file in filenames:
          self.obj.WriteText(file + '\n')
       self.obj.WriteText('\n')
-	  print('x')
-
+	  if(OnDropFiles is True):
+		  print('I am cool')
 
 
 if __name__ == "__main__":
