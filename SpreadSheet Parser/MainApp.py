@@ -22,20 +22,42 @@ from datetime import datetime
 pathOfFile = str
 
 amcRows = 0
+sNumber = ''
 
-
-def readReport(date, filepath):
+#def readReport(date, filepath):
         
-        global amcRows
-        with open(filepath , newline='') as csvfile:
-                reportReader = csv.DictReader(csvfile,)
-                for row in reportReader:
-                        if(row['DATE'] == date): #.strftime("%#m/%#d/%Y")):
-                            s = str(row['SERIAL NUMBER'])
-                            if 'AMC' in s:
-                                amcRows += 1
-                                print(row['DATE'], row['SERIAL NUMBER'])
-                print(amcRows)
+#        global amcRows
+#        with open(filepath , newline='') as csvfile:
+#                reportReader = csv.DictReader(csvfile,)
+#                for row in reportReader:
+#                        if(row['DATE'] == date): #.strftime("%#m/%#d/%Y")):
+#                            sNumber = str(row['SERIAL NUMBER'])
+#                            if 'AMC' in sNumber:
+#                                amcRows += 1
+#                                print(row['DATE'], sNumber)
+#                onAddWidget
+#                print(amcRows)
+
+# self.m_staticText47 = wx.StaticText(self.m_panel11, wx.ID_ANY, u"MyLabel",
+# wx.DefaultPosition, wx.DefaultSize, 0 | wx.NO_BORDER)
+# self.m_staticText47.Wrap(-1)
+
+# fgSizer17.Add(self.m_staticText47, 0, wx.ALL, 5)
+
+# self.m_gauge6 = wx.Gauge(self.m_panel11, wx.ID_ANY, 100, wx.DefaultPosition,
+# wx.DefaultSize, wx.GA_HORIZONTAL)
+# self.m_gauge6.SetValue(0)
+# fgSizer17.Add(self.m_gauge6, 0, wx.ALL, 5)
+
+
+                                
+                               
+
+                                #print(row['DATE'], sNumber)
+        #Adding the Static Text corresponding to 'SERIAL NUMBER'
+        
+                #Adding the Gauge or possibly throbber in the future
+
 
 ###########################################################################
 ## Class firstFrame
@@ -44,6 +66,8 @@ class firstFrame(wx.Frame):
         
         def __init__(self, parent):
                 wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"SN Search Script", pos = wx.DefaultPosition, size = wx.Size(500,300), style = wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.TAB_TRAVERSAL)
+
+                
 
                 self.SetSizeHints(wx.Size(-1,-1), wx.Size(500,300))
                 self.SetExtraStyle(wx.WS_EX_VALIDATE_RECURSIVELY)
@@ -149,7 +173,7 @@ class firstFrame(wx.Frame):
                 self.Centre(wx.BOTH)
                 # dndPath = self.m_textCtrl1.GetLineText(0)
                
-        
+                
 
 
         def sendAndHide(self, event):   
@@ -158,22 +182,26 @@ class firstFrame(wx.Frame):
                 dateFormat = datePicked.Format("%#m/%#d/%Y")
                 print(self.m_textCtrl1.GetLineText(0))
                 print(dateFormat) 
-                print(self.m_filePicker1.GetPath())
-                readReport(dateFormat, pickPath)
-                self.Hide()
+                print(self.m_filePicker1.GetPath())                
+                self.Hide()                
                 new_frame = serialCheck(None)
+                new_frame.addWidget(dateFormat, pickPath)
                 new_frame.Show()
         
 
 ###########################################################################
 ## Class serialCheck
 ###########################################################################
-
 class serialCheck(wx.Dialog):
         
         def __init__(self, parent):
                 wx.Dialog.__init__(self, parent, id = wx.ID_ANY, title = u"Serial Number Check", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE | wx.STAY_ON_TOP)
-                frame = firstFrame(None)
+                
+
+                #For onAddWidget
+                
+                self.number_of_serials = 0
+             
                 self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
                 
                 bSizer9 = wx.BoxSizer(wx.VERTICAL)
@@ -219,6 +247,31 @@ class serialCheck(wx.Dialog):
                 self.Centre(wx.BOTH)
                 
                 self.Bind(wx.EVT_CLOSE, self.OnClose)
+
+        def addWidget(self, date, filepath):
+           
+            with open(filepath , newline='') as csvfile:
+                reportReader = csv.DictReader(csvfile,)
+                for row in reportReader:
+                    if(row['DATE'] == date): #.strftime("%#m/%#d/%Y")):
+                        sNumber = str(row['SERIAL NUMBER'])
+                        if 'AMC' in sNumber:
+                            global amcRows
+                            amcRows += 1
+                            label = "SN %s" % amcRows
+                            name = "SN%s" % amcRows
+
+                            #Adding Serial number as static text
+                            new_text = wx.StaticText(self.m_panel11, wx.ID_ANY, label=sNumber, name=name)
+                            new_text.Wrap(-1)
+                            fgSizer17.Add(new_text, 0, wx.ALL, 5)
+
+                            #Adding Gauge that corresponds with the serial
+                            #number
+                            new_gauge = wx.Gauge(self.m_panel11, wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL, name="gauge %s" % amcRows)
+                            new_gauge.SetValue(0)
+                            fgSizer17.Add(new_gauge, 0, wx.ALL, 5)
+
 
         def OnClose(self,event):
                 self.Destroy()
