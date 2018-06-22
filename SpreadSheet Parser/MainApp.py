@@ -16,7 +16,7 @@ import os
 import os.path 
 import csv
 
-from datetime import date
+from datetime import datetime
 
                 
 pathOfFile = str
@@ -25,10 +25,12 @@ amcRows = 0
 
 
 def readReport(date, filepath):
-                with open(filepath , newline='') as csvfile:
-                    reportReader = csv.DictReader(csvfile,)
-                    for row in reportReader:
-                        if(row['DATE'] == date.strftime("%#m/%#d/%Y")):
+        
+        global amcRows
+        with open(filepath , newline='') as csvfile:
+                reportReader = csv.DictReader(csvfile,)
+                for row in reportReader:
+                        if(row['DATE'] == date): #.strftime("%#m/%#d/%Y")):
                             s = str(row['SERIAL NUMBER'])
                             if 'AMC' in s:
                                 amcRows += 1
@@ -153,10 +155,11 @@ class firstFrame(wx.Frame):
         def sendAndHide(self, event):   
                 pickPath = self.m_filePicker1.GetPath()
                 datePicked = self.m_datePicker3.GetValue()
+                dateFormat = datePicked.Format("%#m/%#d/%Y")
                 print(self.m_textCtrl1.GetLineText(0))
-                print(self.m_datePicker3.GetValue()) 
+                print(dateFormat) 
                 print(self.m_filePicker1.GetPath())
-                readReport(datePicked, pickPath)
+                readReport(dateFormat, pickPath)
                 self.Hide()
                 new_frame = serialCheck(None)
                 new_frame.Show()
