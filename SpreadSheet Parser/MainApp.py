@@ -192,17 +192,17 @@ class firstFrame(wx.Frame):
 ###########################################################################
 ## Class serialCheckz
 ###########################################################################
-class serialCheck(wx.Dialog):
+class serialCheck(wx.Frame):
         
         def __init__(self, parent):
-                wx.Dialog.__init__(self, parent, id = wx.ID_ANY, title = u"Serial Number Check", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE | wx.STAY_ON_TOP | wx.VSCROLL)
+                wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"Serial Number Check", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE| wx.STAY_ON_TOP | wx.TAB_TRAVERSAL)
                 global fgSizer17
-                awDone = False
+                
                 #For onAddWidget
-                self.dia= parent 
+                
                 self.number_of_serials = 0
              
-                self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
+                #self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
                 
                 bSizer9 = wx.BoxSizer(wx.VERTICAL)
                 
@@ -210,43 +210,17 @@ class serialCheck(wx.Dialog):
                 fgSizer17 = wx.FlexGridSizer(0, 2, 0, 0)
                 fgSizer17.SetFlexibleDirection(wx.BOTH)
                 fgSizer17.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
+                           
                 
-                #self.m_staticText47 = wx.StaticText(self.m_panel11, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0 | wx.NO_BORDER)
-                #self.m_staticText47.Wrap(-1)
-                
-                #fgSizer17.Add(self.m_staticText47, 0, wx.ALL, 5)
-                
-                #self.m_gauge6 = wx.Gauge(self.m_panel11, wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL)
-                #self.m_gauge6.SetValue(0) 
-                #fgSizer17.Add(self.m_gauge6, 0, wx.ALL, 5)
-                
-                #self.m_staticline5 = wx.StaticLine(self.m_panel11, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL)
-                #fgSizer17.Add(self.m_staticline5, 0, wx.EXPAND | wx.ALL, 5)
-                
-                
-                #fgSizer17.Add((0, 0), 1, wx.EXPAND, 5)
-                
-                #self.m_staticText48 = wx.StaticText(self.m_panel11, wx.ID_ANY, u"MyLabel", wx.DefaultPosition, wx.DefaultSize, 0)
-                #self.m_staticText48.Wrap(-1)
-                
-                #fgSizer17.Add(self.m_staticText48, 0, wx.ALL, 5)
-                self.m_panel11.SetSizer(fgSizer17)
-                self.m_panel11.Layout()
-                fgSizer17.Fit(self.m_panel11)
-                bSizer9.Add(self.m_panel11, 1, wx.EXPAND | wx.ALL, 5)
-                self.Bind(wx.EVT_CLOSE, self.OnClose)
+                self.m_panel11.Layout()                
+                bSizer9.Add(self.m_panel11, 1, wx.EXPAND | wx.ALL, 5)                
+                self.SetSizer(bSizer9)               
+                self.Bind(wx.EVT_CLOSE, self.OnClose)                
                 self.Centre(wx.BOTH)
-                if(awDone is True):
-                    self.SetSizer(bSizer9)
-                    self.Layout()
-                    bSizer9.Fit(self)
                 
-                    
-                
-                    
-
+     
         def addWidget(self, date, filepath):
-           
+            
             with open(filepath , newline='') as csvfile:
                 reportReader = csv.DictReader(csvfile,)
                 for row in reportReader:
@@ -262,15 +236,18 @@ class serialCheck(wx.Dialog):
                             new_text = wx.StaticText(self.m_panel11, wx.ID_ANY, label=sNumber, name=name)
                             new_text.Wrap(-1)
                             fgSizer17.Add(new_text, 0, wx.ALL, 5)
-
-                            #Adding Gauge that corresponds with the serial
-                            #number
+                           
                             new_gauge = wx.Gauge(self.m_panel11, wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL, name="gauge %s" % amcRows)
                             new_gauge.SetValue(0)
                             fgSizer17.Add(new_gauge, 0, wx.ALL, 5)
-                            print(row['DATE'], sNumber)    
-            awDone = True
+                            print(row['DATE'], sNumber)                             
+                            self.Layout()
+                            self.m_panel11.SetSizerAndFit(fgSizer17)
+                            self.Fit()
+            
             print(amcRows)
+            print(fgSizer17.GetItemCount())
+
         def OnClose(self,event):
                 self.Destroy()
                 sys.exit(0)
