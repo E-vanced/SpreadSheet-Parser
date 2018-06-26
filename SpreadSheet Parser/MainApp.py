@@ -178,7 +178,7 @@ class firstFrame(wx.Frame):
 
         def sendAndHide(self, event): 
                 filePath = self.m_filePicker1.GetPath()
-                if(filePath is None):
+                if(filePath is ''):
                         filePath = self.m_textCtrl1.GetLineText(0)                
                 #filePath = self.m_textCtrl1.GetLineText(0)
                 datePicked = self.m_datePicker3.GetValue()
