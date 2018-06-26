@@ -171,21 +171,22 @@ class firstFrame(wx.Frame):
                 self.Layout()
                 
                 self.Centre(wx.BOTH)
-                # dndPath = self.m_textCtrl1.GetLineText(0)
+                 
                
                 
 
 
-        def sendAndHide(self, event):   
-                pickPath = self.m_filePicker1.GetPath()
+        def sendAndHide(self, event): 
+                filePath = self.m_filePicker1.GetPath()
+                if(filePath is None):
+                        filePath = self.m_textCtrl1.GetLineText(0)                
+                #filePath = self.m_textCtrl1.GetLineText(0)
                 datePicked = self.m_datePicker3.GetValue()
-                dateFormat = datePicked.Format("%#m/%#d/%Y")
-                print(self.m_textCtrl1.GetLineText(0))
-                print(dateFormat) 
-                print(self.m_filePicker1.GetPath())                
+                dateFormat = datePicked.Format("%#m/%#d/%Y")                
+                print(dateFormat)                               
                 self.Hide()                
                 new_frame = serialCheck(None)
-                new_frame.addWidget(dateFormat, pickPath)
+                new_frame.addWidget(dateFormat, filePath)
                 new_frame.Show()
         
 
@@ -274,8 +275,8 @@ class FileDropTarget(wx.FileDropTarget):
       # append a list of the file names dropped
       #self.obj.WriteText("%d file(s) dropped:\n" % (len(filenames)))
       for file in filenames:
-         self.obj.WriteText(file + '\n')
-      self.obj.WriteText('\n')
+         self.obj.WriteText(file)
+      
       return True
 
 if __name__ == "__main__":
