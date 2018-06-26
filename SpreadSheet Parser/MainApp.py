@@ -189,14 +189,50 @@ class firstFrame(wx.Frame):
                 new_frame.addWidget(dateFormat, filePath)
                 new_frame.Show()
         
+class fileChooseDialog(wx.Dialog):
+    def __init__(self, parent):
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
+        self.SetSizeHints( wx.Size( -1,-1 ), wx.Size( -1,-1 ) )
 
+        bSizer3 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer8 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_staticText18 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Please Select a File", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+        self.m_staticText18.Wrap( -1 )
+
+        self.m_staticText18.SetFont( wx.Font( 11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+
+        bSizer8.Add( self.m_staticText18, 0, wx.ALL, 20 )
+
+        self.m_button2 = wx.Button( self.m_panel3, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_button2.Bind(wx.EVT_BUTTON, self.okClose)
+        bSizer8.Add( self.m_button2, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+
+
+        self.m_panel3.SetSizer( bSizer8 )
+        self.m_panel3.Layout()
+        bSizer8.Fit( self.m_panel3 )
+        bSizer3.Add( self.m_panel3, 1, wx.EXPAND |wx.ALL, 5 )
+
+
+        self.SetSizer( bSizer3 )
+        self.Layout()
+        bSizer3.Fit( self )
+
+        self.Centre( wx.BOTH )
+    def okClose(self, event):
+        self.Hide()
+        frame = firstFrame(None)
+        frame.Show()
 ###########################################################################
 ## Class serialCheckz
 ###########################################################################
 class serialCheck(wx.Frame):
         
         def __init__(self, parent):
-                wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"Serial Number Check", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE| wx.STAY_ON_TOP | wx.TAB_TRAVERSAL)
+                wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"Serial Number Check", pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE | wx.STAY_ON_TOP | wx.TAB_TRAVERSAL)
                 global fgSizer17
                 
                 #For onAddWidget
@@ -221,7 +257,11 @@ class serialCheck(wx.Frame):
                 
      
         def addWidget(self, date, filepath):
-            
+            dlg = fileChooseDialog(None)
+            if filepath is '':
+                dlg.ShowModal()
+                self.Destroy()
+                return
             with open(filepath , newline='') as csvfile:
                 reportReader = csv.DictReader(csvfile,)
                 for row in reportReader:
@@ -246,8 +286,8 @@ class serialCheck(wx.Frame):
                             self.m_panel11.SetSizerAndFit(fgSizer17)
                             self.Fit()
             
-            print(amcRows)
-            print(fgSizer17.GetItemCount())
+            #print(amcRows)
+            #print(fgSizer17.GetItemCount())
 
         def OnClose(self,event):
                 self.Destroy()
@@ -269,7 +309,7 @@ class FileDropTarget(wx.FileDropTarget):
 
       """ Implement File Drop """
       # For Demo purposes, this function appends a list of the files dropped at
-      # the end of the widget's textW
+      # the end of the widget's text
       # Move Insertion Point to the end of the widget's text
       self.obj.SetInsertionPointEnd()
       # append a list of the file names dropped
@@ -278,6 +318,9 @@ class FileDropTarget(wx.FileDropTarget):
          self.obj.WriteText(file)
       
       return True
+
+
+
 
 if __name__ == "__main__":
         app = wx.App(False)
