@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-###########################################################################
-## Python code generated with wxFormBuilder (version Jun 13 2018)
-## http://www.wxformbuilder.org/
-##
-## PLEASE DO *NOT* EDIT THIS FILE!
-###########################################################################
 import wx
 import wx.xrc
 import wx.adv
@@ -18,62 +10,30 @@ import csv
 
 from datetime import datetime
 
-                
-pathOfFile = str
 
 amcRows = 0
 sNumber = ''
 fgSizer17 = None
-#def readReport(date, filepath):
-        
-#        global amcRows
-#        with open(filepath , newline='') as csvfile:
-#                reportReader = csv.DictReader(csvfile,)
-#                for row in reportReader:
-#                        if(row['DATE'] == date): #.strftime("%#m/%#d/%Y")):
-#                            sNumber = str(row['SERIAL NUMBER'])
-#                            if 'AMC' in sNumber:
-#                                amcRows += 1
-#                                print(row['DATE'], sNumber)
-#                onAddWidget
-#                print(amcRows)
-
-# self.m_staticText47 = wx.StaticText(self.m_panel11, wx.ID_ANY, u"MyLabel",
-# wx.DefaultPosition, wx.DefaultSize, 0 | wx.NO_BORDER)
-# self.m_staticText47.Wrap(-1)
-
-# fgSizer17.Add(self.m_staticText47, 0, wx.ALL, 5)
-
-# self.m_gauge6 = wx.Gauge(self.m_panel11, wx.ID_ANY, 100, wx.DefaultPosition,
-# wx.DefaultSize, wx.GA_HORIZONTAL)
-# self.m_gauge6.SetValue(0)
-# fgSizer17.Add(self.m_gauge6, 0, wx.ALL, 5)
 
 
-                                
-                               
 
-                                #print(row['DATE'], sNumber)
-        #Adding the Static Text corresponding to 'SERIAL NUMBER'
-        
-                #Adding the Gauge or possibly throbber in the future
-
-
-###########################################################################
-## Class firstFrame
-###########################################################################
 class firstFrame(wx.Frame):
         
         def __init__(self, parent):
-                wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"SN Search Script", pos = wx.DefaultPosition, size = wx.Size(500,300), style = wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.TAB_TRAVERSAL)
+                wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"SN Search Script", pos = wx.DefaultPosition, size = wx.Size(500,500), style = wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.TAB_TRAVERSAL)
 
                 
 
-                self.SetSizeHints(wx.Size(-1,-1), wx.Size(500,300))
+                self.SetSizeHints(wx.Size(-1,-1), wx.Size(-1,-1))
                 self.SetExtraStyle(wx.WS_EX_VALIDATE_RECURSIVELY)
                 self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
                 
                 bSizer4 = wx.BoxSizer(wx.VERTICAL)
+
+                self.m_staticText21 = wx.StaticText( self, wx.ID_ANY, u"Instructions:\n\n1. Make sure the very first row of your spreadsheet is labeled     \n    ex: | DATE | NAME | SKU | REASON | LOCATION | SERIAL NUMBER |\n\n2. Download the Spreadsheet as .csv (Comma-separated Values)\n\n3. Select the Date corresponding to the serial numbers you want\nto check                                                                                                 \n\n4. Delete the file after usage to prevent mix-up                               \n", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+                self.m_staticText21.Wrap( -1 )
+                
+                bSizer4.Add( self.m_staticText21, 0, wx.ALL|wx.EXPAND, 5 )
                 
                 self.m_panel7 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1,-1), wx.FULL_REPAINT_ON_RESIZE)
                 fgSizer4 = wx.FlexGridSizer(6, 5, 10, 10)
@@ -191,44 +151,42 @@ class firstFrame(wx.Frame):
         
 class fileChooseDialog(wx.Dialog):
     def __init__(self, parent):
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.DEFAULT_DIALOG_STYLE|wx.STAY_ON_TOP )
-        self.SetSizeHints( wx.Size( -1,-1 ), wx.Size( -1,-1 ) )
+        wx.Dialog.__init__(self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size(-1,-1), style = wx.DEFAULT_DIALOG_STYLE | wx.STAY_ON_TOP)
+        self.SetSizeHints(wx.Size(-1,-1), wx.Size(-1,-1))
 
-        bSizer3 = wx.BoxSizer( wx.VERTICAL )
+        bSizer3 = wx.BoxSizer(wx.VERTICAL)
 
-        self.m_panel3 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-        bSizer8 = wx.BoxSizer( wx.VERTICAL )
+        self.m_panel3 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bSizer8 = wx.BoxSizer(wx.VERTICAL)
 
-        self.m_staticText18 = wx.StaticText( self.m_panel3, wx.ID_ANY, u"Please Select a File", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
-        self.m_staticText18.Wrap( -1 )
+        self.m_staticText18 = wx.StaticText(self.m_panel3, wx.ID_ANY, u"Please Select a File", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE)
+        self.m_staticText18.Wrap(-1)
 
-        self.m_staticText18.SetFont( wx.Font( 11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+        self.m_staticText18.SetFont(wx.Font(11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial"))
 
-        bSizer8.Add( self.m_staticText18, 0, wx.ALL, 20 )
+        bSizer8.Add(self.m_staticText18, 0, wx.ALL, 20)
 
-        self.m_button2 = wx.Button( self.m_panel3, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_button2 = wx.Button(self.m_panel3, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_button2.Bind(wx.EVT_BUTTON, self.okClose)
-        bSizer8.Add( self.m_button2, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+        bSizer8.Add(self.m_button2, 0, wx.ALIGN_CENTER | wx.ALL, 5)
 
 
-        self.m_panel3.SetSizer( bSizer8 )
+        self.m_panel3.SetSizer(bSizer8)
         self.m_panel3.Layout()
-        bSizer8.Fit( self.m_panel3 )
-        bSizer3.Add( self.m_panel3, 1, wx.EXPAND |wx.ALL, 5 )
+        bSizer8.Fit(self.m_panel3)
+        bSizer3.Add(self.m_panel3, 1, wx.EXPAND | wx.ALL, 5)
 
 
-        self.SetSizer( bSizer3 )
+        self.SetSizer(bSizer3)
         self.Layout()
-        bSizer3.Fit( self )
+        bSizer3.Fit(self)
 
-        self.Centre( wx.BOTH )
+        self.Centre(wx.BOTH)
     def okClose(self, event):
         self.Hide()
         frame = firstFrame(None)
         frame.Show()
-###########################################################################
-## Class serialCheckz
-###########################################################################
+
 class serialCheck(wx.Frame):
         
         def __init__(self, parent):
@@ -318,9 +276,6 @@ class FileDropTarget(wx.FileDropTarget):
          self.obj.WriteText(file)
       
       return True
-
-
-
 
 if __name__ == "__main__":
         app = wx.App(False)
