@@ -11,7 +11,7 @@ import csv
 from datetime import datetime
 
 
-amcRows = 0
+
 sNumber = ''
 fgSizer17 = None
 
@@ -187,6 +187,37 @@ class fileChooseDialog(wx.Dialog):
         frame = firstFrame(None)
         frame.Show()
 
+class chooseAgain ( wx.Dialog ):
+    def __init__( self, parent ):
+            wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+
+            self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+
+            bSizer10 = wx.BoxSizer( wx.VERTICAL )
+
+            self.m_panel4 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+            bSizer10.Add( self.m_panel4, 1, wx.EXPAND |wx.ALL, 5 )
+
+            self.m_staticText22 = wx.StaticText( self, wx.ID_ANY, u"There are no Serial Numbers containing 'AMC'\ncorresponding with this date. \n\nPlease select a different date.", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+            self.m_staticText22.Wrap( -1 )
+
+            bSizer10.Add( self.m_staticText22, 0, wx.ALL|wx.EXPAND, 20 )
+
+            self.m_button3 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+            self.m_button3.Bind(wx.EVT_BUTTON, self.okClose)
+            bSizer10.Add( self.m_button3, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+
+
+            self.SetSizer( bSizer10 )
+            self.Layout()
+            bSizer10.Fit( self )
+
+            self.Centre( wx.BOTH )
+            self.Bind(wx.EVT_CLOSE, self.okClose)
+    def okClose(self, event):
+            self.Destroy()
+            frame.Show()
+
 class serialCheck(wx.Frame):
         
         def __init__(self, parent):
@@ -215,7 +246,9 @@ class serialCheck(wx.Frame):
                 
      
         def addWidget(self, date, filepath):
+            amcRows = 0
             dlg = fileChooseDialog(None)
+            dlg1 = chooseAgain(None)
             if filepath is '':
                 dlg.ShowModal()
                 self.Destroy()
@@ -226,7 +259,7 @@ class serialCheck(wx.Frame):
                     if(row['DATE'] == date): #.strftime("%#m/%#d/%Y")):
                         sNumber = str(row['SERIAL NUMBER'])
                         if 'AMC' in sNumber:
-                            global amcRows
+                           
                             amcRows += 1
                             label = "SN %s" % amcRows
                             name = "SN%s" % amcRows
@@ -243,7 +276,10 @@ class serialCheck(wx.Frame):
                             self.Layout()
                             self.m_panel11.SetSizerAndFit(fgSizer17)
                             self.Fit()
-            
+            if(amcRows is 0):
+                dlg1.ShowModal()
+                self.Destroy()
+                return        
             #print(amcRows)
             #print(fgSizer17.GetItemCount())
 
@@ -252,6 +288,11 @@ class serialCheck(wx.Frame):
                 sys.exit(0)
                 frame = firstFrame(None)
                 frame.Show()
+
+
+
+
+
 
 class FileDropTarget(wx.FileDropTarget):
    """ This object implements Drop Target functionality for Files """
