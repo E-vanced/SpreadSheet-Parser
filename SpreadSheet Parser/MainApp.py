@@ -131,25 +131,26 @@ class firstFrame(wx.Frame):
                 self.Layout()
                 
                 self.Centre(wx.BOTH)
-
+                
         
                  
         def sendAndHide(self, event):             
             filePath = self.m_filePicker1.GetPath()
             if(filePath is ''):
                     filePath = self.m_textCtrl1.GetLineText(0)    
-            self.errorCatch(filepath)
+            self.errorCatch(filePath)
                 
             #filePath = self.m_textCtrl1.GetLineText(0)
             datePicked = self.m_datePicker3.GetValue()
-            dateFormat = datePicked.Format("%#m/%#d/%Y")                
+            dateFormat = datePicked.Format("%#m/%#d/%Y")
+            
             print(dateFormat)                               
                             
             new_frame = serialCheck(None)
             new_frame.addWidget(dateFormat, filePath)
             new_frame.Show()
 
-        def errorCatch(self, event, filepath):
+        def errorCatch(self, filepath):
             dlg2 = wrongFile(None)
             if filepath[-4] is not {'.csv'}:
                 dlg2 = wrongFile(None)
