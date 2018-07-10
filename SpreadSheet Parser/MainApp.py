@@ -131,23 +131,14 @@ class firstFrame(wx.Frame):
                 self.Layout()
                 
                 self.Centre(wx.BOTH)
+
+        
                  
-        def errorCatch(self, event, filepath):
-            dlg2 = wrongFile(None)
-            if filepath[-4] is not {'.csv'}:
-                dlg2 = wrongFile(None)
-                dlg2.ShowModal()
-
-            else:
-                pass
-                
-
-
         def sendAndHide(self, event):             
             filePath = self.m_filePicker1.GetPath()
             if(filePath is ''):
                     filePath = self.m_textCtrl1.GetLineText(0)    
-            errorCatch(filepath)
+            self.errorCatch(filepath)
                 
             #filePath = self.m_textCtrl1.GetLineText(0)
             datePicked = self.m_datePicker3.GetValue()
@@ -157,6 +148,17 @@ class firstFrame(wx.Frame):
             new_frame = serialCheck(None)
             new_frame.addWidget(dateFormat, filePath)
             new_frame.Show()
+
+        def errorCatch(self, event, filepath):
+            dlg2 = wrongFile(None)
+            if filepath[-4] is not {'.csv'}:
+                dlg2 = wrongFile(None)
+                dlg2.ShowModal()
+
+            else:
+                pass
+
+        
         
 class fileChooseDialog(wx.Dialog):
     def __init__(self, parent):
