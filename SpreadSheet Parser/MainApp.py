@@ -18,7 +18,7 @@ fgSizer17 = None
 
 
 class firstFrame(wx.Frame):
-        
+        filepath = None
         def __init__(self, parent):
                 wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"SN Search Script", pos = wx.DefaultPosition, size = wx.Size(500,500), style = wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.TAB_TRAVERSAL)
 
@@ -132,22 +132,31 @@ class firstFrame(wx.Frame):
                 
                 self.Centre(wx.BOTH)
                  
-               
+        def errorCatch(self, event, filepath):
+            dlg2 = wrongFile(None)
+            if filepath[-4] is not {'.csv'}:
+                dlg2 = wrongFile(None)
+                dlg2.ShowModal()
+
+            else:
+                pass
                 
 
 
-        def sendAndHide(self, event): 
-                filePath = self.m_filePicker1.GetPath()
-                if(filePath is ''):
-                        filePath = self.m_textCtrl1.GetLineText(0)                
-                #filePath = self.m_textCtrl1.GetLineText(0)
-                datePicked = self.m_datePicker3.GetValue()
-                dateFormat = datePicked.Format("%#m/%#d/%Y")                
-                print(dateFormat)                               
-                self.Hide()                
-                new_frame = serialCheck(None)
-                new_frame.addWidget(dateFormat, filePath)
-                new_frame.Show()
+        def sendAndHide(self, event):             
+            filePath = self.m_filePicker1.GetPath()
+            if(filePath is ''):
+                    filePath = self.m_textCtrl1.GetLineText(0)    
+            errorCatch(filepath)
+                
+            #filePath = self.m_textCtrl1.GetLineText(0)
+            datePicked = self.m_datePicker3.GetValue()
+            dateFormat = datePicked.Format("%#m/%#d/%Y")                
+            print(dateFormat)                               
+                            
+            new_frame = serialCheck(None)
+            new_frame.addWidget(dateFormat, filePath)
+            new_frame.Show()
         
 class fileChooseDialog(wx.Dialog):
     def __init__(self, parent):
@@ -218,6 +227,38 @@ class chooseAgain ( wx.Dialog ):
             self.Destroy()
             frame.Show()
 
+class wrongFile ( wx.Dialog ):
+    def __init__( self, parent ):
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+
+        self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+
+        bSizer11 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_panel5 = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer11.Add( self.m_panel5, 1, wx.EXPAND |wx.ALL, 5 )
+
+        self.m_staticText23 = wx.StaticText( self, wx.ID_ANY, u"This is not a supported file type.", wx.DefaultPosition, wx.DefaultSize, 0 )
+        
+        self.m_staticText23.Wrap( -1 )
+
+        bSizer11.Add( self.m_staticText23, 0, wx.ALL, 20 )
+
+        self.m_button4 = wx.Button( self, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_button4.Bind(wx.EVT_BUTTON, self.okClose)
+        bSizer11.Add( self.m_button4, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+
+
+        self.SetSizer( bSizer11 )
+        self.Layout()
+        bSizer11.Fit( self )
+        self.Bind(wx.EVT_CLOSE, self.okClose)
+        self.Centre( wx.BOTH )
+
+    def okClose(self, event):
+            self.Destroy()
+            frame.Show()
+    
 class serialCheck(wx.Frame):
         
         def __init__(self, parent):
@@ -249,10 +290,12 @@ class serialCheck(wx.Frame):
             amcRows = 0
             dlg = fileChooseDialog(None)
             dlg1 = chooseAgain(None)
+            dlg2 = wrongFile(None)
             if filepath is '':
                 dlg.ShowModal()
                 self.Destroy()
-                return
+                return          
+            
             with open(filepath , newline='') as csvfile:
                 reportReader = csv.DictReader(csvfile,)
                 for row in reportReader:
@@ -288,11 +331,6 @@ class serialCheck(wx.Frame):
                 sys.exit(0)
                 frame = firstFrame(None)
                 frame.Show()
-
-
-
-
-
 
 class FileDropTarget(wx.FileDropTarget):
    """ This object implements Drop Target functionality for Files """
