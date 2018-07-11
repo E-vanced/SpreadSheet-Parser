@@ -20,126 +20,129 @@ fgSizer17 = None
 class firstFrame(wx.Frame):
         filepath = None
         def __init__(self, parent):
-                wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"SN Search Script", pos = wx.DefaultPosition, size = wx.Size(500,500), style = wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.TAB_TRAVERSAL)
+            wx.Frame.__init__(self, parent, id = wx.ID_ANY, title = u"SN Search Script", pos = wx.DefaultPosition, size = wx.Size(500,500), style = wx.DEFAULT_FRAME_STYLE | wx.MAXIMIZE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.TAB_TRAVERSAL)
 
+            self.SetSizeHints(wx.Size(-1,-1), wx.Size(-1,-1))
+            self.SetExtraStyle(wx.WS_EX_VALIDATE_RECURSIVELY)
+            self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
                 
+            bSizer4 = wx.BoxSizer(wx.VERTICAL)
 
-                self.SetSizeHints(wx.Size(-1,-1), wx.Size(-1,-1))
-                self.SetExtraStyle(wx.WS_EX_VALIDATE_RECURSIVELY)
-                self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
+            self.m_staticText21 = wx.StaticText( self, wx.ID_ANY, u"Instructions:\n\n1. Make sure the very first row of your spreadsheet is labeled     \n    ex: | DATE | NAME | SKU | REASON | LOCATION | SERIAL NUMBER |\n\n2. Download the Spreadsheet as .csv (Comma-separated Values)\n\n3. Select the Date corresponding to the serial numbers you want\nto check                                                                                                 \n\n4. Delete the file after usage to prevent mix-up                               \n", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
+            self.m_staticText21.Wrap( -1 )
                 
-                bSizer4 = wx.BoxSizer(wx.VERTICAL)
-
-                self.m_staticText21 = wx.StaticText( self, wx.ID_ANY, u"Instructions:\n\n1. Make sure the very first row of your spreadsheet is labeled     \n    ex: | DATE | NAME | SKU | REASON | LOCATION | SERIAL NUMBER |\n\n2. Download the Spreadsheet as .csv (Comma-separated Values)\n\n3. Select the Date corresponding to the serial numbers you want\nto check                                                                                                 \n\n4. Delete the file after usage to prevent mix-up                               \n", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTRE )
-                self.m_staticText21.Wrap( -1 )
+            bSizer4.Add( self.m_staticText21, 0, wx.ALL|wx.EXPAND, 5 )
                 
-                bSizer4.Add( self.m_staticText21, 0, wx.ALL|wx.EXPAND, 5 )
+            self.m_panel7 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1,-1), wx.FULL_REPAINT_ON_RESIZE)
+            fgSizer4 = wx.FlexGridSizer(6, 5, 10, 10)
+            fgSizer4.AddGrowableCol(1)
+            fgSizer4.AddGrowableCol(2)
+            fgSizer4.AddGrowableCol(3)
+            fgSizer4.AddGrowableRow(3)
+            fgSizer4.SetFlexibleDirection(wx.BOTH)
+            fgSizer4.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_NONE)
                 
-                self.m_panel7 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(-1,-1), wx.FULL_REPAINT_ON_RESIZE)
-                fgSizer4 = wx.FlexGridSizer(6, 5, 10, 10)
-                fgSizer4.AddGrowableCol(1)
-                fgSizer4.AddGrowableCol(2)
-                fgSizer4.AddGrowableCol(3)
-                fgSizer4.AddGrowableRow(3)
-                fgSizer4.SetFlexibleDirection(wx.BOTH)
-                fgSizer4.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_NONE)
+            #------ROW 0------#
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)                
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)          
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)              
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)                
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                #------ROW 0------#
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)          
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)              
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)                
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            #------ROW 1------#
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                #------ROW 1------#
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            self.m_staticText1 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Select Date:", wx.Point(-1,-1), wx.Size(-1,-1), 0)
+            self.m_staticText1.Wrap(-1)
                 
-                self.m_staticText1 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Select Date:", wx.Point(-1,-1), wx.Size(-1,-1), 0)
-                self.m_staticText1.Wrap(-1)
+            self.m_staticText1.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
+            self.m_staticText1.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
                 
-                self.m_staticText1.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
-                self.m_staticText1.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
+            fgSizer4.Add(self.m_staticText1, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL, 5)
                 
-                fgSizer4.Add(self.m_staticText1, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL, 5)
-                
-                self.m_datePicker3 = wx.adv.DatePickerCtrl(self.m_panel7, wx.ID_ANY, wx.DefaultDateTime, wx.Point(-1,-1), wx.Size(-1,-1), wx.adv.DP_DEFAULT | wx.adv.DP_DROPDOWN)
-                self.m_datePicker3.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
+            self.m_datePicker3 = wx.adv.DatePickerCtrl(self.m_panel7, wx.ID_ANY, wx.DefaultDateTime, wx.Point(-1,-1), wx.Size(-1,-1), wx.adv.DP_DEFAULT | wx.adv.DP_DROPDOWN)
+            self.m_datePicker3.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOWTEXT))
                 
                 
-                fgSizer4.Add(self.m_datePicker3, 0, wx.ALL, 5)               
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            fgSizer4.Add(self.m_datePicker3, 0, wx.ALL, 5)               
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                #------ROW 2------#
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            #------ROW 2------#
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                self.m_staticText3 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Select .CSV file:", wx.DefaultPosition, wx.DefaultSize, 0 | wx.TAB_TRAVERSAL)
-                self.m_staticText3.Wrap(-1)
+            self.m_staticText3 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Select .CSV file:", wx.DefaultPosition, wx.DefaultSize, 0 | wx.TAB_TRAVERSAL)
+            self.m_staticText3.Wrap(-1)
                 
-                fgSizer4.Add(self.m_staticText3, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL, 5)
+            fgSizer4.Add(self.m_staticText3, 0, wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.ALL, 5)
                 
-                self.m_filePicker1 = wx.FilePickerCtrl(self.m_panel7, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.Size(300,-1), wx.FLP_DEFAULT_STYLE)
-                fgSizer4.Add(self.m_filePicker1, 0, wx.ALL | wx.EXPAND, 5)
+            self.m_filePicker1 = wx.FilePickerCtrl(self.m_panel7, wx.ID_ANY, wx.EmptyString, u"Select a file", u"*.*", wx.DefaultPosition, wx.Size(300,-1), wx.FLP_DEFAULT_STYLE)
+            fgSizer4.Add(self.m_filePicker1, 0, wx.ALL | wx.EXPAND, 5)
  
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                #------ROW 3------#
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            #------ROW 3------#
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                self.m_staticText31 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Or Drag and Drop the file:", wx.DefaultPosition, wx.DefaultSize, 0)
-                self.m_staticText31.Wrap(-1)
+            self.m_staticText31 = wx.StaticText(self.m_panel7, wx.ID_ANY, u"Or Drag and Drop the file:", wx.DefaultPosition, wx.DefaultSize, 0)
+            self.m_staticText31.Wrap(-1)
                 
-                fgSizer4.Add(self.m_staticText31, 0, wx.ALIGN_RIGHT | wx.ALL, 5)
+            fgSizer4.Add(self.m_staticText31, 0, wx.ALIGN_RIGHT | wx.ALL, 5)
                 
-                self.m_textCtrl1 = wx.TextCtrl(self.m_panel7, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size(300,100), wx.TE_CHARWRAP | wx.TE_LEFT | wx.TE_WORDWRAP)
-                self.m_textCtrl1.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
-                self.m_textCtrl1.SetMinSize(wx.Size(300,100))
-                self.m_textCtrl1.SetMaxSize(wx.Size(300,100))
+            self.m_textCtrl1 = wx.TextCtrl(self.m_panel7, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size(300,100), wx.TE_CHARWRAP | wx.TE_LEFT | wx.TE_WORDWRAP)
+            self.m_textCtrl1.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW))
+            self.m_textCtrl1.SetMinSize(wx.Size(300,100))
+            self.m_textCtrl1.SetMaxSize(wx.Size(300,100))
 
-                dt3 = FileDropTarget(self.m_textCtrl1)
+            dt3 = FileDropTarget(self.m_textCtrl1)
 
-                self.SetDropTarget(dt3)
+            self.SetDropTarget(dt3)
                 
-                fgSizer4.Add(self.m_textCtrl1, 0, wx.ALL | wx.EXPAND | wx.FIXED_MINSIZE, 5)               
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            fgSizer4.Add(self.m_textCtrl1, 0, wx.ALL | wx.EXPAND | wx.FIXED_MINSIZE, 5)               
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)               
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                #------ROW 4------#
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            #------ROW 4------#
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                ##### THIS BUTTON HIDES THE FIRST FRAME AND DISPLAYS THE DIALOG
-                ##### BOX #####
-                self.m_button7 = wx.Button(self.m_panel7, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0)
-                self.m_button7.Bind(wx.EVT_BUTTON, self.sendAndHide)
-                fgSizer4.Add(self.m_button7, 0, wx.ALIGN_RIGHT | wx.ALL, 5)
+            ##### THIS BUTTON HIDES THE FIRST FRAME AND DISPLAYS THE DIALOG
+            ##### BOX #####
+            self.m_button7 = wx.Button(self.m_panel7, wx.ID_ANY, u"OK", wx.DefaultPosition, wx.DefaultSize, 0)
+            self.m_button7.Bind(wx.EVT_BUTTON, self.sendAndHide)
+            fgSizer4.Add(self.m_button7, 0, wx.ALIGN_RIGHT | wx.ALL, 5)
 
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
 
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5)
                 
-                #------ROW 5------#
-                fgSizer4.Add((0, 0), 1, wx.EXPAND, 5) 
-                self.m_panel7.SetSizer(fgSizer4)
-                self.m_panel7.Layout()
-                fgSizer4.Fit(self.m_panel7)
-                bSizer4.Add(self.m_panel7, 1, wx.ALL | wx.EXPAND, 5)
+            #------ROW 5------#
+            fgSizer4.Add((0, 0), 1, wx.EXPAND, 5) 
+            self.m_panel7.SetSizer(fgSizer4)
+            self.m_panel7.Layout()
+            fgSizer4.Fit(self.m_panel7)
+            bSizer4.Add(self.m_panel7, 1, wx.ALL | wx.EXPAND, 5)
                 
                 
-                self.SetSizer(bSizer4)
-                self.Layout()
+            self.SetSizer(bSizer4)
+            self.Layout()
                 
-                self.Centre(wx.BOTH)
-                
-        
-                 
+            self.Centre(wx.BOTH)
+             
         def sendAndHide(self, event):             
             filePath = self.m_filePicker1.GetPath()
             if(filePath is ''):
                     filePath = self.m_textCtrl1.GetLineText(0)    
-            self.errorCatch(filePath)
-                
+            dlg2 = wrongFile(None)
+            f = filePath[-4:]
+            if filePath.endswith('.csv'):  
+                pass                
+            else:
+                dlg2.ShowModal()
+                print('why do you keep showing???')
+                return self.__init_subclass__
+            print(filePath[-4:])  
             #filePath = self.m_textCtrl1.GetLineText(0)
             datePicked = self.m_datePicker3.GetValue()
             dateFormat = datePicked.Format("%#m/%#d/%Y")
@@ -150,17 +153,7 @@ class firstFrame(wx.Frame):
             new_frame.addWidget(dateFormat, filePath)
             new_frame.Show()
 
-        def errorCatch(self, filepath):
-            dlg2 = wrongFile(None)
-            if filepath[-4] is not {'.csv'}:
-                dlg2 = wrongFile(None)
-                dlg2.ShowModal()
 
-            else:
-                pass
-
-        
-        
 class fileChooseDialog(wx.Dialog):
     def __init__(self, parent):
         wx.Dialog.__init__(self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size(-1,-1), style = wx.DEFAULT_DIALOG_STYLE | wx.STAY_ON_TOP)
@@ -194,6 +187,7 @@ class fileChooseDialog(wx.Dialog):
         bSizer3.Fit(self)
 
         self.Centre(wx.BOTH)
+
     def okClose(self, event):
         self.Hide()
         frame = firstFrame(None)
@@ -225,6 +219,7 @@ class chooseAgain ( wx.Dialog ):
             bSizer10.Fit( self )
 
             self.Centre( wx.BOTH )
+
             self.Bind(wx.EVT_CLOSE, self.okClose)
     def okClose(self, event):
             self.Destroy()
@@ -293,11 +288,11 @@ class serialCheck(wx.Frame):
             amcRows = 0
             dlg = fileChooseDialog(None)
             dlg1 = chooseAgain(None)
-            dlg2 = wrongFile(None)
+            
             if filepath is '':
                 dlg.ShowModal()
                 self.Destroy()
-                return          
+                return    
             
             with open(filepath , newline='') as csvfile:
                 reportReader = csv.DictReader(csvfile,)
