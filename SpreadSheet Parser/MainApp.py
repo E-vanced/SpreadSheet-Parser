@@ -134,16 +134,13 @@ class firstFrame(wx.Frame):
             filePath = self.m_filePicker1.GetPath()
             if(filePath is ''):
                     filePath = self.m_textCtrl1.GetLineText(0)    
-            dlg2 = wrongFile(None)
-            f = filePath[-4:]
+            dlg2 = wrongFile(None)            
             if filePath.endswith('.csv'):  
                 pass                
             else:
-                dlg2.ShowModal()
-                print('why do you keep showing???')
-                return self.__init_subclass__
-            print(filePath[-4:])  
-            #filePath = self.m_textCtrl1.GetLineText(0)
+                dlg2.ShowModal()                
+                return self.__init_subclass__            
+           
             datePicked = self.m_datePicker3.GetValue()
             dateFormat = datePicked.Format("%#m/%#d/%Y")
             
